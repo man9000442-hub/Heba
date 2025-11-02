@@ -17,11 +17,16 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* لمنع ظهور scrollbar إذا كانت الخلفيات تتجاوز الشاشة */
-            position: relative; /* مهم لتموضع طبقات الخلفية */
+            overflow: hidden; 
+            position: relative; 
+            background-color: #fce4ec; 
+            transition: background-color 1.5s ease-in-out; 
         }
+
+        /* -------------------------------------- */
+        /* طبقات الخلفية المتعددة والمفصلة جداً */
+        /* -------------------------------------- */
         
-        /* طبقات الخلفية المتعددة والمفصلة */
         .background-layer {
             position: absolute;
             top: 0;
@@ -30,63 +35,83 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0; /* تبدأ مخفية لتظهر تدريجياً أو بعد الانتقال */
+            opacity: 0; 
             transition: opacity 2s ease-in-out, transform 2s ease-in-out;
-            pointer-events: none; /* لتجنب اعتراض الأحداث على العناصر الأخرى */
+            pointer-events: none;
         }
 
-        /* طبقة خلفية أولى: نجوم لامعة أو تأثير سحري خفيف */
-        .background-layer.stars {
-            background-image: url('https://i.imgur.com/Gj82J2R.png'); /* رابط لصورة نجوم/تأثيرات ضوئية خفيفة */
-            background-size: contain; /* لا تتكرر وتظهر مرة واحدة أو تتكيف */
-            background-repeat: repeat; /* تكرار النجوم لتغطية الشاشة */
-            opacity: 0.1; /* شفافة جداً */
-            animation: moveStars 30s linear infinite; /* تحريك بطيء للنجوم */
-        }
-
-        /* طبقة خلفية ثانية: ورود ناعمة جداً */
-        .background-layer.roses {
-            background-image: url('https://i.imgur.com/8zVzC7z.png'); /* رابط لصورة ورود خفيفة */
-            opacity: 0.08; /* شفافة جداً جداً */
-            background-size: 150px; /* حجم صغير للورود */
-            background-repeat: repeat; /* تكرار للورود */
-            animation: fadeRoses 20s linear infinite alternate; /* ظهور واختفاء خفيف */
-        }
-
-        /* طبقة خلفية ثالثة: تدرج لوني ناعم */
+        /* الطبقة 1: تدرج لوني ناعم (CSS) */
         .background-layer.gradient {
-            background: linear-gradient(135deg, rgba(255, 192, 203, 0.2), rgba(255, 105, 180, 0.1), rgba(255, 255, 255, 0));
-            opacity: 0.7; /* شفافية أعلى للتدرج */
+            background: linear-gradient(45deg, rgba(255, 192, 203, 0.4), rgba(255, 105, 180, 0.2));
+            opacity: 0.8; /* تدرج ظاهر في البداية */
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        /* الطبقة 2: تأثير ضبابي Bokeh (CSS) */
+        .background-layer.bokeh {
+            background-image: 
+                radial-gradient(circle at 10% 20%, #ffc0cb 1px, transparent 0),
+                radial-gradient(circle at 80% 90%, #ff69b4 2px, transparent 0);
+            background-size: 50px 50px, 80px 80px;
+            animation: moveBokeh 60s linear infinite; 
+            opacity: 0.05; /* شفاف جداً */
         }
         
-        /* طبقة رابعة: قلوب متناثرة (خفيفة جداً) */
-        .background-layer.hearts {
-            background-image: url('https://i.imgur.com/9C0N7G1.png'); /* رابط لقلوب صغيرة جداً */
-            background-size: 50px;
-            background-repeat: repeat;
-            opacity: 0.05; /* شفافة للغاية */
-            animation: floatHearts 25s infinite ease-in-out; /* حركة صعود وهبوط للقلوب */
+        /* الطبقة 3: ورود بيضاء شفافة (صورة) */
+        .background-layer.roses {
+            background-image: url('https://i.imgur.com/u5jJ6YQ.png'); 
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            opacity: 0.3; /* ظهور جزئي للورود في الأسفل */
         }
 
-        /* تأثيرات حركة للخلفيات لإضافة حيوية */
-        @keyframes moveStars {
+        /* الطبقة 4: قلوب متناثرة صغيرة جداً (صورة) */
+        .background-layer.hearts {
+            background-image: url('https://i.imgur.com/83pA3d3.png');
+            background-size: 50px;
+            background-repeat: repeat;
+            opacity: 0.03; /* شفاف للغاية */
+            animation: floatHearts 25s infinite ease-in-out; 
+        }
+        
+        /* الطبقة 5: ضوء لامع خفيف (صورة) */
+        .background-layer.light {
+            background-image: url('https://i.imgur.com/M6L5vGq.png');
+            background-size: 150%;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.1; /* خفيف جداً */
+            animation: shineLight 40s linear infinite;
+        }
+
+        /* الطبقة 6: قوام نسيج خفيف (صورة) */
+        .background-layer.texture {
+            background-image: url('https://i.imgur.com/G5EwY7z.png'); 
+            background-size: 400px;
+            background-repeat: repeat;
+            opacity: 0.05; /* نسيج خفي جداً */
+        }
+
+
+        /* تأثيرات الحركة للخلفيات */
+        @keyframes moveBokeh {
             from { background-position: 0 0; }
             to { background-position: 100% 100%; }
         }
-
-        @keyframes fadeRoses {
-            0% { opacity: 0.08; }
-            50% { opacity: 0.15; }
-            100% { opacity: 0.08; }
-        }
-        
         @keyframes floatHearts {
             0% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-20px) scale(1.02); }
             100% { transform: translateY(0) scale(1); }
         }
+        @keyframes shineLight {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
 
-        /* تنسيق الشاشات الأساسية - وضع العناصر في المنتصف */
+
+        /* تنسيق المحتوى الرئيسي */
         .full-screen {
             height: 100vh;
             width: 100%;
@@ -94,14 +119,15 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative; /* لجعل الزر والاسم يظهران فوق الخلفيات */
-            z-index: 10; /* ضمان ظهورها فوق طبقات الخلفية */
+            position: relative; 
+            z-index: 10; 
         }
 
-        /* تنسيق الزر */
+        /* تنسيق الزر - دوسـي هنـا */
         #mainButton {
+            /* (نفس تنسيقات الزر السابقة) */
             padding: 20px 40px;
-            font-size: 24px;
+            font-size: 24px; 
             font-weight: bold;
             color: white;
             background-color: #e91e63;
@@ -110,15 +136,9 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             transition: all 0.4s ease;
-            animation: pulse 2s infinite;
+            animation: pulse 2s infinite; 
         }
 
-        #mainButton:active {
-            transform: scale(0.95);
-            box-shadow: none;
-        }
-
-        /* تأثير النبض البسيط للزر لجذب الانتباه */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -134,29 +154,32 @@
         #hebaName {
             font-family: 'Dancing Script', cursive; 
             font-size: 80px; 
-            color: #ff69b4; /* لون وردي حار */
-            text-shadow: 0 0 15px rgba(255, 105, 180, 0.9); /* ظل متوهج ورومانسي */
+            color: #ff69b4; 
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.9); 
             opacity: 0; 
             transform: scale(0.8) translateY(20px); 
             transition: opacity 2.5s ease-out, transform 2.5s ease-out; 
         }
 
-        /* تنسيقات الشاشة بعد الضغط - لتظهر الخلفيات بشكل أوضح وتتغير الألوان */
+        /* تنسيقات الشاشة بعد الضغط */
         body.revealed {
-            background-color: #ffe0f0; /* لون خلفية أفتح وأكثر رومانسية بعد الكشف */
+            background-color: #ffe0f0; 
         }
-        body.revealed .background-layer.stars { opacity: 0.2; transform: scale(1.05); }
-        body.revealed .background-layer.roses { opacity: 0.15; transform: scale(1.02); }
-        body.revealed .background-layer.gradient { opacity: 0.9; }
-        body.revealed .background-layer.hearts { opacity: 0.1; }
-
+        /* بعد الضغط، تتغير شفافية بعض الطبقات لتظهر بشكل أوضح */
+        body.revealed .background-layer.roses { opacity: 0.5; }
+        body.revealed .background-layer.hearts { opacity: 0.1; } 
+        body.revealed .background-layer.light { opacity: 0.3; } 
+        body.revealed .background-layer.texture { opacity: 0.1; }
     </style>
 </head>
 <body>
-    <div class="background-layer stars"></div>
-    <div class="background-layer roses"></div>
+    
     <div class="background-layer gradient"></div>
+    <div class="background-layer texture"></div>
+    <div class="background-layer bokeh"></div>
     <div class="background-layer hearts"></div>
+    <div class="background-layer light"></div>
+    <div class="background-layer roses"></div>
 
     <div class="full-screen" id="initialScreen">
         <button id="mainButton">دوسـي هنـا</button>
@@ -173,33 +196,22 @@
             const revealScreen = document.getElementById('revealScreen');
             const hebaName = document.getElementById('hebaName');
             const body = document.body;
-            const backgroundLayers = document.querySelectorAll('.background-layer');
 
             mainButton.addEventListener('click', function() {
                 
-                // إضافة كلاس لـ body لتغيير الخلفية وتنشيط طبقات الخلفية بعد الضغط
                 body.classList.add('revealed');
                 
-                // 1. إخفاء الشاشة الأولى
+                // إخفاء الزر والشاشة الأولى
                 initialScreen.style.display = 'none';
 
-                // 2. إظهار الشاشة الثانية
+                // إظهار الشاشة الثانية
                 revealScreen.classList.remove('hidden');
 
-                // 3. تأخير بسيط ثم جعل اسم "Heba" يظهر تدريجياً وبحركة
+                // جعل اسم "Heba" يظهر تدريجياً وبحركة
                 setTimeout(() => {
                     hebaName.style.opacity = '1';
                     hebaName.style.transform = 'scale(1) translateY(0)';
                 }, 100); 
-
-                // جعل طبقات الخلفية تظهر بشكل تدريجي بعد الكشف
-                setTimeout(() => {
-                    backgroundLayers.forEach(layer => {
-                        layer.style.opacity = parseFloat(layer.dataset.revealedOpacity || 0.1); // استخدم الشفافية المحددة في CSS
-                        layer.style.transform = 'scale(1.05)';
-                    });
-                }, 50); // تأخير بسيط جداً بعد إخفاء الزر
-
             });
         });
     </script>
